@@ -260,7 +260,7 @@ jobs:
       # Combine x86_64 and arm64 to one universal binary
       - name: Combine MacOS binaries
         run: |
-          lipo -create bin/godot.macos.editor.x86_64.mono bin/godot.macos.editor.arm64.mono -output bin/godot.macos.tools.universal.mono
+          lipo -create bin/godot.macos.editor.x86_64.mono bin/godot.macos.editor.arm64.mono -output bin/godot.macos.editor.universal.mono
 
       # Package MacOS app
       - name: Package MacOS app
