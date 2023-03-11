@@ -262,6 +262,7 @@ jobs:
           cp -r misc/dist/macos_tools.app ./Godot.app
           mkdir -p Godot.app/Contents/MacOS
           cp bin/godot.macos.editor.universal.mono Godot.app/Contents/MacOS/Godot
+          cp bin/GodotSharp Godot.app/Contents/Resources/GodotSharp
           chmod +x Godot.app/Contents/MacOS/Godot
           mv Godot.app bin/
 
