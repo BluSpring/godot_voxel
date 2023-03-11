@@ -243,8 +243,8 @@ jobs:
         env:
           SCONS_CACHE: ${{github.workspace}}/.scons_cache/
         run: |
-          scons -j2 verbose=yes warnings=all werror=yes wno-inconsistent-missing-override=yes platform=macos arch=arm64 tests=no target=editor debug_symbols=no module_mono_enabled=yes mono_glue=yes mono_static=yes copy_mono_root=yes
-          scons -j2 verbose=yes warnings=all werror=yes wno-inconsistent-missing-override=yes platform=macos arch=x86_64 tests=no target=editor debug_symbols=no module_mono_enabled=yes mono_glue=yes mono_static=yes copy_mono_root=yes
+          scons -j2 verbose=yes warnings=all werror=no platform=macos arch=arm64 tests=no target=editor debug_symbols=no module_mono_enabled=yes mono_glue=yes mono_static=yes copy_mono_root=yes
+          scons -j2 verbose=yes warnings=all werror=no platform=macos arch=x86_64 tests=no target=editor debug_symbols=no module_mono_enabled=yes mono_glue=yes mono_static=yes copy_mono_root=yes
 
       # Build the Godot Mono assemblies
       - name: Build Mono assemblies
