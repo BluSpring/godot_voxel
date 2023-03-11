@@ -163,6 +163,11 @@ jobs:
         run: |
           scons -j2 verbose=yes warnings=all werror=yes platform=linuxbsd tests=no target=editor dev_build=no debug_symbols=no module_mono_enabled=yes mono_glue=yes mono_static=yes copy_mono_root=yes
 
+      # Build the Godot Mono assemblies
+      - name: Build Mono assemblies
+        run: |
+          python ./modules/mono/build_scripts/build_assemblies.py --godot-output-dir=./bin --godot-platform=linuxbsd
+
       # Make build available
       - uses: actions/upload-artifact@v2
         with:
@@ -238,12 +243,26 @@ jobs:
         env:
           SCONS_CACHE: ${{github.workspace}}/.scons_cache/
         run: |
-          scons -j2 verbose=yes warnings=all werror=yes platform=macos tests=no target=editor dev_build=no debug_symbols=no module_mono_enabled=yes mono_glue=yes mono_static=yes copy_mono_root=yes
+          scons -j2 verbose=yes warnings=all werror=yes platform=macos arch=arm64 tests=no target=editor dev_build=no debug_symbols=no module_mono_enabled=yes mono_glue=yes mono_static=yes copy_mono_root=yes
+
+      # Build the Godot Mono assemblies
+      - name: Build Mono assemblies
+        run: |
+          python ./modules/mono/build_scripts/build_assemblies.py --godot-output-dir=./bin --godot-platform=macos
+
+      # Package MacOS app
+      - name: Package MacOS app
+        run: |
+          cp -r misc/dist/macos_tools.app ./Godot.app
+          mkdir -p Godot.app/Contents/MacOS
+          cp bin/godot.macos.editor.universal.mono Godot.app/Contents/MacOS/Godot
+          chmod +x Godot.app/Contents/MacOS/Godot
+          mv Godot.app bin/
 
       # Make build available
       - uses: actions/upload-artifact@v2
         with:
-          name: godot.macos.editor.x86_64.mono
+          name: godot.macos.editor.universal.mono
           path: bin/*
 
   windows-editor-mono:
@@ -317,6 +336,11 @@ jobs:
           SCONS_CACHE: /.scons_cache/
         run: |
           scons -j2 verbose=yes warnings=all werror=yes platform=windows tests=no target=editor dev_build=no debug_symbols=no module_mono_enabled=yes mono_glue=yes copy_mono_root=yes mono_static=yes
+
+      # Build the Godot Mono assemblies
+      - name: Build Mono assemblies
+        run: |
+          python ./modules/mono/build_scripts/build_assemblies.py --godot-output-dir=./bin --godot-platform=windows
 
       # TODO Enhancement: Run tests? Such tests are able to run from Godot 4.0 only
       # Execute unit tests for the editor
