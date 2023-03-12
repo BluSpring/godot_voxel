@@ -262,7 +262,7 @@ jobs:
         run: |
           lipo -create bin/godot.macos.editor.x86_64.mono bin/godot.macos.editor.arm64.mono -output bin/godot.macos.editor.universal.mono
 
-      # Package MacOS app
+      # Package MacOS app and delete the separated 2 binaries to avoid a too large package
       - name: Package MacOS app
         run: |
           cp -r misc/dist/macos_tools.app ./Godot.app
@@ -270,6 +270,7 @@ jobs:
           cp -r bin/godot.macos.editor.universal.mono Godot.app/Contents/MacOS/Godot
           cp -r bin/GodotSharp Godot.app/Contents/Resources/GodotSharp
           chmod +x Godot.app/Contents/MacOS/Godot
+          rm -rf bin/godot.macos.editor.arm64.mono bin/godot.macos.editor.x86_64.mono
           mv Godot.app bin/
 
       # Make build available
