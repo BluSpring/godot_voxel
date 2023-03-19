@@ -243,14 +243,14 @@ jobs:
         env:
           SCONS_CACHE: ${{github.workspace}}/.scons_cache/
         run: |
-          scons -j2 verbose=yes warnings=all werror=no platform=macos arch=arm64 tests=no target=editor debug_symbols=no module_mono_enabled=yes mono_glue=yes mono_static=yes copy_mono_root=yes
+          scons -j2 verbose=yes warnings=all werror=no platform=macos osxcross_sdk=darwin22 use_volk=no arch=arm64 tests=no target=editor debug_symbols=no module_mono_enabled=yes mono_glue=yes mono_static=yes copy_mono_root=yes
           
       # Separate the compilation between the two arches to know what's happening
       - name: Compilation (x86_64)
         env:
           SCONS_CACHE: ${{github.workspace}}/.scons_cache/
         run: |
-          scons -j2 verbose=yes warnings=all werror=no platform=macos arch=x86_64 tests=no target=editor debug_symbols=no module_mono_enabled=yes mono_glue=yes mono_static=yes copy_mono_root=yes
+          scons -j2 verbose=yes warnings=all werror=no platform=macos osxcross_sdk=darwin22 use_volk=no arch=x86_64 tests=no target=editor debug_symbols=no module_mono_enabled=yes mono_glue=yes mono_static=yes copy_mono_root=yes
 
       # Build the Godot Mono assemblies
       - name: Build Mono assemblies
@@ -269,9 +269,9 @@ jobs:
           mkdir -p Godot.app/Contents/MacOS
           cp -r bin/godot.macos.editor.universal.mono Godot.app/Contents/MacOS/Godot
           cp -r bin/GodotSharp Godot.app/Contents/Resources/GodotSharp
-          chmod +x Godot.app/Contents/MacOS/Godot
           rm -rf bin/godot.macos.editor.arm64.mono bin/godot.macos.editor.x86_64.mono
           mv Godot.app bin/
+          chmod +x bin/Godot.app/Contents/MacOS/Godot
 
       # Make build available
       - uses: actions/upload-artifact@v2
