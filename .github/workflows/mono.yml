@@ -30,12 +30,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-<<<<<<< HEAD
-          sudo rm -f /etc/apt/sources.list.d/*
-          sudo cp -f modules/voxel/misc/sources.list /etc/apt/sources.list
-=======
           sudo add-apt-repository ppa:kisak/kisak-mesa
->>>>>>> 528f3b37ee841b27691c9886469c0b45931f1e69
           sudo apt-get update
 
       # Install all packages (except scons)
@@ -112,12 +107,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-<<<<<<< HEAD
-          sudo rm -f /etc/apt/sources.list.d/*
-          sudo cp -f modules/voxel/misc/sources.list /etc/apt/sources.list
-=======
           sudo add-apt-repository ppa:kisak/kisak-mesa
->>>>>>> 528f3b37ee841b27691c9886469c0b45931f1e69
           sudo apt-get update
 
       # Install all packages (except scons)
