@@ -238,6 +238,10 @@ jobs:
           name: mono-glue
           path: modules/mono/glue
 
+      - name: Build the managed libraries
+        run: |
+          python ./modules/mono/build_scripts/build_assemblies.py --godot-output-dir=./bin
+
       # We should always be explicit with our flags usage here since it's gonna be sure to always set those flags
       - name: Compilation (arm64)
         env:
